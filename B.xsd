@@ -1,0 +1,14 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:c="foo://C"
+           targetNamespace="foo://B">
+
+   <xs:import namespace="foo://C" schemaLocation="C.xsd"/>
+
+   <xs:complexType name="ManyBooStrings" abstract="false" mixed="false">
+      <xs:sequence>
+         <xs:element name="astring" type="c:boostring"/>
+      </xs:sequence>
+   </xs:complexType>
+
+
+</xs:schema>

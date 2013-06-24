@@ -1,0 +1,14 @@
+<xs:schema targetNamespace="foo://C"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:c="foo://C">
+
+   <xs:complexType name="Nothing"/>
+
+   <xs:simpleType name="boostring">
+     <xs:restriction base="xs:anyURI">
+       <xs:pattern value="boo"/>
+     </xs:restriction>
+   </xs:simpleType>
+
+
+</xs:schema>

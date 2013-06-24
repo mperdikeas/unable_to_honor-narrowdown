@@ -1,0 +1,3 @@
+xjc -extension -npa                                   -episode C.xsd.episode -p C -d src C.xsd
+xjc -extension -npa -b C.xsd.episode                  -episode B.xsd.episode -p B -d src B.xsd
+xjc -extension -npa -b B.xsd.episode -b C.xsd.episode                        -p A -d src A.xsd

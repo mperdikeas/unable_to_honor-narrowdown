@@ -1,0 +1,91 @@
+<project name="ivoa-jaxb" basedir="." default="jaxb-all">
+    <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" />
+    <taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask" classpath="${basedir}/tools/jaxb-xjc-2.2.7.jar:
+                                                                         ${basedir}/tools/jaxb-core-2.2.7.jar:
+                                                                         ${basedir}/tools/jaxb-impl-2.2.7.jar"/>
+
+    <property name="src.dir"                    value="${basedir}/src"/>
+    <property name="schema.dir"                 value="${basedir}"/>
+
+
+
+        <property name="C.schema"         value="C.xsd"/>
+        <property name="C.schema.file"    value="${schema.dir}/${C.schema}"/>
+        <property name="C.package"        value="C"/>
+        <property name="C.dir"            value="${src.dir}/C"/>
+        <property name="C.episode"        value="${basedir}/C.xsd.episode"/>
+
+
+        <property name="B.schema"         value="B.xsd"/>
+        <property name="B.schema.file"    value="${schema.dir}/${B.schema}"/>
+        <property name="B.package"        value="B"/>
+        <property name="B.dir"            value="${src.dir}/B"/>
+        <property name="B.episode"        value="${basedir}/B.xsd.episode"/>
+
+
+        <property name="A.schema"         value="A.xsd"/>
+        <property name="A.schema.file"    value="${schema.dir}/${A.schema}"/>
+        <property name="A.package"        value="A"/>
+        <property name="A.dir"            value="${src.dir}/A"/>
+
+
+        <target name="jaxb-C">
+            <mkdir dir="${C.dir}"/>
+            <xjc schema="${C.schema.file}" destdir="${src.dir}" package="${C.package}" extension="true" >
+                <arg value="-npa"/>
+                    <arg value="-episode"/>
+                    <arg value="${C.episode}"/>
+                <depends dir="${basedir}">
+                    <include name="${C.schema.file}"/>
+                </depends>
+                <produces dir="${C.dir}">
+                    <include name="*.java"/>
+                </produces>
+            </xjc>
+        </target>
+
+
+        <target name="jaxb-B">
+            <mkdir dir="${B.dir}"/>
+            <xjc schema="${B.schema.file}" destdir="${src.dir}" package="${B.package}" extension="true" >
+                <arg value="-npa"/>
+                    <arg value="-episode"/>
+                    <arg value="${B.episode}"/>
+                <depends dir="${basedir}">
+                    <include name="${B.schema.file}"/>
+                </depends>
+                <produces dir="${B.dir}">
+                    <include name="*.java"/>
+                </produces>
+            </xjc>
+        </target>
+
+
+        <target name="jaxb-A">
+            <mkdir dir="${A.dir}"/>
+            <xjc schema="${A.schema.file}" destdir="${src.dir}" package="${A.package}" extension="true" >
+                <arg value="-npa"/>
+                    <arg value="-b"/>
+                    <arg value="${B.episode}"/>
+                    <arg value="-b"/>
+                    <arg value="${C.episode}"/>
+                <depends dir="${basedir}">
+                    <include name="${A.schema.file}"/>
+                </depends>
+                <produces dir="${A.dir}">
+                    <include name="*.java"/>
+                </produces>
+            </xjc>
+        </target>
+
+    <target name="jaxb-all" depends="jaxb-C, jaxb-B, jaxb-A"/>
+
+    <target name="clean" description="Prepare for clean build">
+      <delete dir="${C.dir}"/>
+      <delete dir="${B.dir}"/>
+      <delete dir="${A.dir}"/>
+      <delete file="${C.episode}"/>
+      <delete file="${B.episode}"/>
+    </target>
+
+</project>
