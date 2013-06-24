@@ -1,0 +1,6 @@
+#!/bin/bash
+export JAXB_HOME=~/software-downloads/jaxb-2.2.7/jaxb-ri-2.2.7
+
+java -classpath $(echo $JAXB_HOME/lib/*.jar | tr ' ' ':') com.sun.tools.xjc.XJCFacade -extension -npa -episode C.xsd.episode -p C -d src C.xsd
+java -classpath $(echo $JAXB_HOME/lib/*.jar | tr ' ' ':') com.sun.tools.xjc.XJCFacade -extension -npa -b C.xsd.episode -episode B.xsd.episode -p B -d src B.xsd
+java -classpath $(echo $JAXB_HOME/lib/*.jar | tr ' ' ':') com.sun.tools.xjc.XJCFacade -extension -npa -b B.xsd.episode -b C.xsd.episode -p A -d src A.xsd
